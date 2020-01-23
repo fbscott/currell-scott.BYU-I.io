@@ -1,1 +1,87 @@
-Hello World!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>currell-scott | CIT 261 Fluencies</title>
+  <link rel="stylesheet" href="/assets/css/fluency.css">
+</head>
+<body>
+  <!------------------------- FIRST EXAMPLE ------------------------->
+  <h2>Example One: Toggling classes on DOM event:</h2>
+
+  <p>Click the button below to reveal a hidden paragraph.</p>
+
+  <button id="js-button">Show Text</button><br /><br />
+
+  <blockquote id="js-reveal" class="hide">
+    <p>When a user clicks on the <code>button</code>, JS fires an event that looks for an element with an <code>id</code> of <code>js-reveal</code>, finds that element, and removes a pre-existing <code>hide</code> class from it (The <code>hide</code> class adds a style property of <code>display: none;</code>). The JS also updates the <code>button</code> text. The <code>button</code> acts as a toggle, allowing the user to hide/show the element at will.</p>  
+  </blockquote>
+  <!------------------------- END FIRST EXAMPLE --------------------->
+  <!------------------------- SECOND EXAMPLE ------------------------>
+  <h2>Example Two: Setting new CSS properties:</h2>
+
+  <blockquote>
+    <p>The following <code>&lt;li&gt;</code>s are styled on page load with hex values found in their data attributes. JS collects an array of DOM elements (<code>&lt;li&gt;</code>s in this case) by looking for <code>js-list-item</code> classes, gets the color values from their <code>data-color</code> attributes, and applies the <code>color: #hex;</code> values to the DOM elements in the array.</p>
+    <p>These styles do <b>NOT</b> originate from an external .css file.</p>
+  </blockquote>
+
+  <ul>
+    <li class="js-list-item" data-color="#ff0000">RED</li>
+    <li class="js-list-item" data-color="#ffa500">ORANGE</li>
+    <li class="js-list-item" data-color="#ffff00">YELLOW</li>
+    <li class="js-list-item" data-color="#00ff00">GREEN</li>
+    <li class="js-list-item" data-color="#0000ff">BLUE</li>
+    <li class="js-list-item" data-color="#4b0082">INDIGO</li>
+    <li class="js-list-item" data-color="#ee82ee">VIOLET</li>
+  </ul>
+
+  <blockquote>This list does <b>NOT</b> have <code>js-list-item</code> classes or <code>data-color</code> attributes, so the JavaScript logic ignores it.</blockquote>
+
+  <ul>
+    <li data-foodGroup="dairy">CHEESE</li>
+    <li data-foodGroup="grain">BREAD</li>
+    <li data-foodGroup="meat">STEAK</li>
+  </ul>
+  <!------------------------- END SECOND EXAMPLE -------------------->
+  <!------------------------- THIRD EXAMPLE ------------------------->
+  <h2>Example Three: Manipulating existing CSS properties:</h2>
+
+  <blockquote>
+    <p>Similar to the example above, but here we change existing CSS properties on a DOM event (unlike the first example where we were toggleing a class).</p>
+    <p>JS parses the <code>form</code> and collects the selected <code>value</code>s on <code>button</code> click. It, then, finds the target DOM element (<code>js-target</code>) and applies the selected <code>value</code>s.</p>
+  </blockquote>
+
+  <form name="text_changer" id="js-text-change-form">
+
+    <label for="color">Color:</label>
+
+    <select name="color">
+      <option value="#ff0000">RED</option>
+      <option value="#ffa500">ORANGE</option>
+      <option value="#ffff00">YELLOW</option>
+      <option value="#00ff00">GREEN</option>
+      <option value="#0000ff">BLUE</option>
+      <option value="#4b0082">INDIGO</option>
+      <option value="#ee82ee">VIOLET</option>
+    </select><br />
+    
+    <label for="size">Size:</label>
+    
+    <select name="size">
+      <option value="12px">12px</option>
+      <option value="20pt">20pt</option>
+      <option value="2em">2em</option>
+      <option value="initial">initial</option>
+    </select><br />
+    
+    <button id="js-button-2" name="change_props">Change Text Color and Size</button>
+    
+  </form>
+
+  <p id="js-target">CHOOSE settings and CLICK button to change this text.</p>
+  <!------------------------- END THIRD EXAMPLE --------------------->
+
+  <div class="padding-bottom"></div>
+  <script src="/assets/js/fluency.js"></script>
+</body>
+</html>
