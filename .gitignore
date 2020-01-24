@@ -1,0 +1,28 @@
+# ignore the following sub folders
+*/downloads
+.idea/
+out/
+**/zoom_meetings
+
+# ignore sftp-config
+# *.json
+
+# ignore the following file types
+*.doc
+*.docx
+*.exe
+*.iml
+*.jpeg
+*.JPEG
+*.jpg
+*.JPG
+*.mp4
+*.pdf
+*.png
+*.PNG
+*.psd
+*.tmp
+*.txt
+*.xls
+*.xlsx
+*.zip
