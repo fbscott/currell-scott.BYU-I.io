@@ -6,8 +6,26 @@
 </head>
 <body>
   <h1>AJAX</h1>
+
+  <form action="./assets/js/fluency_AJAX.htm" name="reaction">
+    <select name="tags" id="js-tags">
+      <option value="" selected disabled> -- choose a reaction -- </option>
+      <option value="yes">yes</option>
+      <option value="no">no</option>
+      <option value="happy">happy</option>
+      <option value="sad">sad</option>
+      <option value="flirt">flirt</option>
+      <option value="angry">angry</option>
+      <option value="awkward">awkward</option>
+      <option value="ok">ok</option>
+      <option value="ellipsis">ellipsis</option>
+      <option value="meh">meh</option>
+    </select>
+  </form>
+
   <div id="gif-reply-container"></div>
   <div id="gif-container"></div>
+
   <script src="./assets/js/ajax.js"></script>
 </body>
 </html>

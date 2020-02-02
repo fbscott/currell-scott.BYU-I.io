@@ -45,18 +45,21 @@ GIF.loadGifData = (url, loadCallback) => {
  * @return {String} concatenated HTML list of files
  *****************************************************************************/
 GIF.buildGifList = data => {
-    let _gifList = '<ul>';
+    let _gifList = '<ul style="list-style: none;">';
 
-    for (let i = data.length - 1; i >= 0; i--) {
+    for (var i = 0; i < data.length; i++) {
         // template literal
-        _gifList += `<li>
+        _gifList += `${typeof data[i].caption == 'string' ?
+                    `<li>
                        <a id="js-${data[i].id}"
                           class="js-show-gif"
                           href="javascript:void(0);"
-                          data-url="${data[i].file}">
-                          Gif ${i}
+                          data-url="${data[i].file}"
+                          style="text-decoration: none;">
+                          ${data[i].caption}
                        </a>
-                     </li>`;
+                     </li>` :
+                     ''}`;
     }
 
     _gifList += '</ul>';
@@ -86,16 +89,21 @@ GIF.updateDOM = JSON => {
  * INITIALIZER
  * Do all the things - kicks off the XMLHttpRequest
  *****************************************************************************/
-(function init() {
+document.reaction.addEventListener('change', function() {
     // DOM elements
     GIF.replyContainer = document.getElementById('gif-reply-container');
     GIF.gifContainer = document.getElementById('gif-container');
+    // GIF.gifContainer.innerHTML = `<p>Loading . . .</p>`;
+    GIF.getReaction = this.tags.value;
     // JSON path (next five lines)
-    GIF.baseURI = 'http://replygif.net/api/gifs?tag=';
-    GIF.tags    = 'okay,friends';
-    GIF.params  = '&tag-operator=and';
-    GIF.api     = '&api-key=39YAprx5Yi';
-    GIF.fullURI = GIF.baseURI + GIF.tags + GIF.params + GIF.api;
-
+    GIF.baseURI = 'http://replygif.net/api/gifs';
+    // GIF.tags    = 'tag=okay';
+    GIF.reply   = 'reply=' + GIF.getReaction;
+    GIF.params  = 'tag-operator=and';
+    GIF.api     = 'api-key=39YAprx5Yi';
+    GIF.fullURI = GIF.baseURI + '?' +
+                  GIF.reply + '&' +
+                  GIF.params + '&' +
+                  GIF.api;
     GIF.loadGifData(GIF.fullURI, GIF.updateDOM);
-})();
+});
