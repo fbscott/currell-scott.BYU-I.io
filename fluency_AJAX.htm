@@ -2,9 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/base.css">
+  <link rel="stylesheet" href="./assets/css/main.css">
   <title>AJAX</title>
 </head>
 <body>
-  <h1>AJAX</h1>
+
+<div class="bg-gray">
+  <div class="row">
+    <div class="column">
+      <h1 class="margin-top-30">AJAX</h1>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <p class="margin-top-30">Choose a "reaction" below to get a list of gifs to view.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column">
+    <form action="./assets/js/fluency_AJAX.htm" name="reaction">
+      <select name="tags" id="js-tags">
+        <option value="" selected disabled> -- choose a reaction -- </option>
+        <option value="yes">yes</option>
+        <option value="no">no</option>
+        <option value="happy">happy</option>
+        <option value="sad">sad</option>
+        <option value="flirt">flirt</option>
+        <option value="angry">angry</option>
+        <option value="awkward">awkward</option>
+        <option value="ok">ok</option>
+        <option value="ellipsis">ellipsis</option>
+        <option value="meh">meh</option>
+      </select>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="column large-6">
+    <div id="gif-reply-container"></div>
+  </div>
+  <div class="column large-6">
+    <div id="gif-container"><img src="./assets/img/image-placeholder.jpg" /></div>
+  </div>
+</div>
+
+<script src="./assets/js/ajax.js"></script>
 </body>
 </html>
