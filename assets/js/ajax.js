@@ -19,7 +19,7 @@ var GIF = GIF || {};
  *****************************************************************************/
 GIF.loadGifData = (url, loadCallback) => {
     // placeholder while loading
-    GIF.replyContainer.innerHTML = 'Loading . . .';
+    GIF.replyContainer.innerHTML = `<p>Loading . . .</p>`;
 
     let _xhr = new XMLHttpRequest();
 
@@ -45,7 +45,7 @@ GIF.loadGifData = (url, loadCallback) => {
  * @return {String} concatenated HTML list of files
  *****************************************************************************/
 GIF.buildGifList = data => {
-    let _gifList = '<ul style="list-style: none;">';
+    let _gifList = '<ol>';
 
     for (var i = 0; i < data.length; i++) {
         // template literal
@@ -62,7 +62,7 @@ GIF.buildGifList = data => {
                      ''}`;
     }
 
-    _gifList += '</ul>';
+    _gifList += '</ol>';
 
     return _gifList;
 };
@@ -93,7 +93,7 @@ document.reaction.addEventListener('change', function() {
     // DOM elements
     GIF.replyContainer = document.getElementById('gif-reply-container');
     GIF.gifContainer = document.getElementById('gif-container');
-    // GIF.gifContainer.innerHTML = `<p>Loading . . .</p>`;
+    GIF.gifContainer.innerHTML = `<img src="./assets/img/image-placeholder.jpg" />`;
     GIF.getReaction = this.tags.value;
     // JSON path (next five lines)
     GIF.baseURI = 'http://replygif.net/api/gifs';
