@@ -21,36 +21,22 @@
 
 <div class="row">
   <div class="column">
-    <p class="margin-top-30">Choose a "reaction" below to get a list of gifs to view.</p>
+    <p class="margin-top-30">Enter a city below to see it's forecast.</p>
   </div>
 </div>
 
 <div class="row">
   <div class="column">
-    <form action="./assets/js/fluency_AJAX.htm" name="reaction">
-      <select name="tags" id="js-tags">
-        <option value="" selected disabled> -- choose a reaction -- </option>
-        <option value="yes">yes</option>
-        <option value="no">no</option>
-        <option value="happy">happy</option>
-        <option value="sad">sad</option>
-        <option value="flirt">flirt</option>
-        <option value="angry">angry</option>
-        <option value="awkward">awkward</option>
-        <option value="ok">ok</option>
-        <option value="ellipsis">ellipsis</option>
-        <option value="meh">meh</option>
-      </select>
+    <form action="" name="forecast">
+      <input type="text" name="city" placeholder="&nbsp;enter city" />
+      <button type="button" name="submit" id="js-submit">Submit</button>
     </form>
   </div>
 </div>
 
 <div class="row">
-  <div class="column large-6">
-    <div id="gif-reply-container"></div>
-  </div>
-  <div class="column large-6">
-    <div id="gif-container"><img src="./assets/img/image-placeholder.jpg" /></div>
+  <div class="column">
+    <div id="js-forecast-container"></div>
   </div>
 </div>
 
