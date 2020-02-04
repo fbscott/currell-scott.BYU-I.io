@@ -103,7 +103,7 @@ document.reaction.addEventListener('change', function() {
     GIF.params  = 'tag-operator=and';
     GIF.api     = 'api-key=39YAprx5Yi';
     GIF.fullURI = GIF.cors +
-                  GIF.baseURI + '?' +
+                  GIF.baseURI + '&' +
                   GIF.reply + '&' +
                   GIF.params + '&' +
                   GIF.api;
