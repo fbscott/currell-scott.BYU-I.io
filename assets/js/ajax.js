@@ -96,7 +96,7 @@ document.reaction.addEventListener('change', function() {
     GIF.gifContainer.innerHTML = `<img src="./assets/img/image-placeholder.jpg" />`;
     GIF.getReaction = this.tags.value;
     // JSON path (next five lines)
-    GIF.baseURI = 'https://replygif.net/api/gifs';
+    GIF.baseURI = 'http://replygif.net/api/gifs';
     // GIF.tags    = 'tag=okay';
     GIF.reply   = 'reply=' + GIF.getReaction;
     GIF.params  = 'tag-operator=and';
