@@ -95,7 +95,7 @@ document.reaction.addEventListener('change', function() {
     GIF.gifContainer = document.getElementById('gif-container');
     GIF.gifContainer.innerHTML = `<img src="./assets/img/image-placeholder.jpg" />`;
     GIF.getReaction = this.tags.value;
-    GIF.cors = 'http://crossorigin.me/';
+    GIF.cors = 'http://cors.io/?';
     // JSON path (next five lines)
     GIF.baseURI = 'http://replygif.net/api/gifs';
     // GIF.tags    = 'tag=okay';
