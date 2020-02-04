@@ -48,6 +48,6 @@ WF.log = (data) => {
 document.forecast.submit.addEventListener('click', function() {
     // DOM elements
     WF.forecastContainer = document.getElementById('js-forecast-container');
-    WF.fullURI = 'http://api.openweathermap.org/data/2.5/forecast?q=denver,%20US,%20US&units=imperial&apiKey=efb3e20ecbe6d6d8220230bbafc45108';
+    WF.fullURI = 'https://api.openweathermap.org/data/2.5/forecast?q=denver,%20US,%20US&units=imperial&apiKey=efb3e20ecbe6d6d8220230bbafc45108';
     WF.loadForecast(WF.fullURI, WF.log);
 });
