@@ -12,6 +12,7 @@ h2 { font-size: 1.5em; }
 h3, h4, h5, h6, p, a, li { font-size: 1em; }
 li { margin-bottom: 15px }
 select, input { height: 2.5em; }
+input { border: 1px solid #cccccc; }
 
 /*****************************************************************************
  * grid
