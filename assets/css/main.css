@@ -9,3 +9,11 @@
 .margin-bottom-30 {
    margin-bottom: 30px;
 }
+
+th, td {
+   text-align: center;
+   padding: 10px;
+   border: 1px solid #cccccc;
+   min-width: 100px;
+   max-width: 100px;
+}
