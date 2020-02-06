@@ -37,9 +37,9 @@ WF.loadForecast = (url, loadCallback) => {
     _xhr.send();
 };
 
-WF.getFiveDayHigh = (data) => {};
+WF.getDailyHigh = (data) => {};
 
-WF.getFiveDayLow = (data) => {};
+WF.getDailyLow = (data) => {};
 
 WF.parseByDays = (data) => {
     for (var i = 0; i < data.list.length; i++) {
