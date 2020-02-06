@@ -81,8 +81,7 @@ Alien.prototype.getArmaments = function() {
     let _returnStatement = '';
 
     if (this.weapons === undefined || this.weapons.length === 0) {
-        _returnStatement += this.species + ' is a peaceful creature. '
-                          + this.species + ' just ' + this.message;
+        _returnStatement += this.species + ' is a peaceful creature. ' + this.species + ' just ' + this.message;
         return _returnStatement;
     } else {
         _returnStatement += this.species + ' is equipped with:\n\n';
