@@ -13,6 +13,7 @@ h3, h4, h5, h6, p, a, li {
    display: inline-block;
    font-size: 1em;
 }
+p { display: block; }
 li { margin-bottom: 15px }
 select, input { height: 2.5em; }
 input { border: 1px solid #cccccc; }
