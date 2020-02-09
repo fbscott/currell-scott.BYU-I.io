@@ -155,8 +155,12 @@ WF.parseByDays = data => {
     }
 };
 
+/******************************************************************************
+ * UPDATE THE DOM
+ * @param  {Object} data - parsed JSON object array
+ *****************************************************************************/
 WF.updateTheDOM = data => {
-    let _table = `<h2>5-Day Forecast for ${data.city.name}</h2>
+    let _table = `<h2>4-Day Forecast for ${data.city.name}</h2>
                     <table><tr>`;
 
     WF.parseByDays(data);
@@ -169,8 +173,8 @@ WF.updateTheDOM = data => {
 
     for (var i = 0; i < WF.cal.length; i++) {
         _table += `<td>
-                     <p>${WF.getDailyHigh(WF[WF.cal[i]])}</p>
-                     <p>${WF.getDailyLow(WF[WF.cal[i]])}</p>
+                     <p class="margin-top-15 margin-bottom-0">High: ${WF.getDailyHigh(WF[WF.cal[i]])}&#8457;</p>
+                     <p class="margin-bottom-15">Low: ${WF.getDailyLow(WF[WF.cal[i]])}&#8457;</p>
                    </td>`;
     }
 
@@ -179,6 +183,10 @@ WF.updateTheDOM = data => {
     WF.forecastContainer.innerHTML = _table;
 };
 
+/******************************************************************************
+ * CLEAR DATA
+ * Clear daily and calendar data before doing a new AJAX request.
+ *****************************************************************************/
 WF.clearData = () => {
     WF.sun   = {};
     WF.mon   = {};
@@ -189,6 +197,22 @@ WF.clearData = () => {
     WF.sat   = {};
     WF.cal   = [];
 };
+
+/******************************************************************************
+ * Add event listener when "enter" is pressed in the input field.
+ * resource: how to js trigger button enter:
+ *           https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
+ * @param  {Event} event - keydown
+ *****************************************************************************/
+document.forecast.city.addEventListener('keydown', function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.forecast.submit.click();
+    }
+});
 
 /******************************************************************************
  * INITIALIZER
