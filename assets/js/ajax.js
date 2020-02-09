@@ -95,59 +95,59 @@ WF.parseByDays = data => {
     for (var i = 0; i < data.list.length; i++) {
         switch(new Date(data.list[i].dt * 1000).getDay()) {
             case 0:
-                WF.sunday = WF.sunday || {};
-                WF.sunday.list = WF.sunday.list || [];
-                WF.sunday.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
+                WF.sun = WF.sun || {};
+                WF.sun.list = WF.sun.list || [];
+                WF.sun.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
                 if (new Date(data.list[i].dt * 1000).getDay() === _forecastStartDay) {
-                    WF.forecastCalendar = ['monday', 'tuesday', 'wednesday', 'thursday'];
+                    WF.cal = ['mon', 'tues', 'wed', 'thur'];
                 }
                 break;
             case 1:
-                WF.monday = WF.monday || {};
-                WF.monday.list = WF.monday.list || [];
-                WF.monday.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
+                WF.mon = WF.mon || {};
+                WF.mon.list = WF.mon.list || [];
+                WF.mon.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
                 if (new Date(data.list[i].dt * 1000).getDay() === _forecastStartDay) {
-                    WF.forecastCalendar = ['tuesday', 'wednesday', 'thursday', 'friday'];
+                    WF.cal = ['tues', 'wed', 'thur', 'fri'];
                 }
                 break;
             case 2:
-                WF.tuesday = WF.tuesday || {};
-                WF.tuesday.list = WF.tuesday.list || [];
-                WF.tuesday.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
+                WF.tues = WF.tues || {};
+                WF.tues.list = WF.tues.list || [];
+                WF.tues.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
                 if (new Date(data.list[i].dt * 1000).getDay() === _forecastStartDay) {
-                    WF.forecastCalendar = ['wednesday', 'thursday', 'friday', 'saturday'];
+                    WF.cal = ['wed', 'thur', 'fri', 'sat'];
                 }
                 break;
             case 3:
-                WF.wednesday = WF.wednesday || {};
-                WF.wednesday.list = WF.wednesday.list || [];
-                WF.wednesday.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
+                WF.wed = WF.wed || {};
+                WF.wed.list = WF.wed.list || [];
+                WF.wed.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
                 if (new Date(data.list[i].dt * 1000).getDay() === _forecastStartDay) {
-                    WF.forecastCalendar = ['thursday', 'friday', 'saturday', 'sunday'];
+                    WF.cal = ['thur', 'fri', 'sat', 'sun'];
                 }
                 break;
             case 4:
-                WF.thursday = WF.thursday || {};
-                WF.thursday.list = WF.thursday.list || [];
-                WF.thursday.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
+                WF.thur = WF.thur || {};
+                WF.thur.list = WF.thur.list || [];
+                WF.thur.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
                 if (new Date(data.list[i].dt * 1000).getDay() === _forecastStartDay) {
-                    WF.forecastCalendar = ['friday', 'saturday', 'sunday', 'monday'];
+                    WF.cal = ['fri', 'sat', 'sun', 'mon'];
                 }
                 break;
             case 5:
-                WF.friday = WF.friday || {};
-                WF.friday.list = WF.friday.list || [];
-                WF.friday.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
+                WF.fri = WF.fri || {};
+                WF.fri.list = WF.fri.list || [];
+                WF.fri.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
                 if (new Date(data.list[i].dt * 1000).getDay() === _forecastStartDay) {
-                    WF.forecastCalendar = ['saturday', 'sunday', 'monday', 'tuesday'];
+                    WF.cal = ['sat', 'sun', 'mon', 'tues'];
                 }
                 break;
             case 6:
-                WF.saturday = WF.saturday || {};
-                WF.saturday.list = WF.saturday.list || [];
-                WF.saturday.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
+                WF.sat = WF.sat || {};
+                WF.sat.list = WF.sat.list || [];
+                WF.sat.list.push({'dt': data.list[i].dt,'main': data.list[i].main, 'weather': data.list[i].weather});
                 if (new Date(data.list[i].dt * 1000).getDay() === _forecastStartDay) {
-                    WF.forecastCalendar = ['sunday', 'monday', 'tuesday', 'wednesday'];
+                    WF.cal = ['sun', 'mon', 'tues', 'wed'];
                 }
                 break;
             default: break;
@@ -161,16 +161,16 @@ WF.updateTheDOM = data => {
 
     WF.parseByDays(data);
 
-    for (var i = 0; i < WF.forecastCalendar.length; i++) {
-        _table += `<th>${(WF.forecastCalendar[i].toUpperCase())}</th>`;
+    for (var i = 0; i < WF.cal.length; i++) {
+        _table += `<th>${(WF.cal[i].toUpperCase())}</th>`;
     }
 
     _table += `</tr><tr>`;
 
-    for (var i = 0; i < WF.forecastCalendar.length; i++) {
+    for (var i = 0; i < WF.cal.length; i++) {
         _table += `<td>
-                     <p>${WF.getDailyHigh(WF[WF.forecastCalendar[i]])}</p>
-                     <p>${WF.getDailyLow(WF[WF.forecastCalendar[i]])}</p>
+                     <p>${WF.getDailyHigh(WF[WF.cal[i]])}</p>
+                     <p>${WF.getDailyLow(WF[WF.cal[i]])}</p>
                    </td>`;
     }
 
@@ -180,13 +180,14 @@ WF.updateTheDOM = data => {
 };
 
 WF.clearData = () => {
-    WF.sunday = {};
-    WF.monday = {};
-    WF.tuesday = {};
-    WF.wednesday = {};
-    WF.thursday = {};
-    WF.friday = {};
-    WF.saturday = {};
+    WF.sun   = {};
+    WF.mon   = {};
+    WF.tues  = {};
+    WF.wed   = {};
+    WF.thur  = {};
+    WF.fri   = {};
+    WF.sat   = {};
+    WF.cal   = [];
 };
 
 /******************************************************************************
