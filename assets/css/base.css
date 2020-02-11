@@ -9,12 +9,11 @@ body {
 h1, h2, h3, h4, h5, h6, p, a, ul, select, input { margin-bottom: 30px; }
 h1 { font-size: 2em;}
 h2 { font-size: 1.5em; }
-h3, h4, h5, h6, p, a, li {
+h3, h4, h5, h6, p, a {
    display: inline-block;
    font-size: 1em;
 }
 p { display: block; }
-li { margin-bottom: 15px }
 select, input, button { height: 2.5em; }
 input {
    border: 1px solid #cccccc;
