@@ -12,14 +12,8 @@ out/
 *.docx
 *.exe
 *.iml
-*.jpeg
-*.JPEG
-*.jpg
-*.JPG
 *.mp4
 *.pdf
-*.png
-*.PNG
 *.psd
 *.tmp
 *.txt
