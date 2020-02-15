@@ -1,45 +1,19 @@
 /*****************************************************************************
- * navigation
+ * buttons
  ****************************************************************************/
-ul.navigation-secondary li a {
-   margin-top: 5px;
-   margin-bottom: 5px;
-   text-decoration: none;
-   background-color: #ebebeb;
-   border-radius: 5px;
-   width: 200px;
-   padding: 8px 10px;
-   position: relative;
-   transition: width 300ms, background-color 300ms;
-   transition-timing-function: ease-in-out;
+button {
+   color: #ffffff;
+   background-color: #444444;
+   border: none;
+   font-style: italic;
+   font-weight: bold;
+   transition: color 300ms,
+               background-color 300ms;
 }
 
-ul.navigation-secondary li a span.caret {
-   position: absolute;
-   padding-right: 10px;
-   right: 0;
-   opacity: 0%;
-   visibility: hidden;
-   transition: opacity 300ms;
-   transition-delay: 500ms;
-}
-
-ul.navigation-secondary li a + span.link-details {
-   opacity: 0%;
-   visibility: hidden;
-   transition: opacity 300ms;
-   transition-delay: 500ms;
-}
-
-ul.navigation-secondary li a:hover {
-   width: 225px;
-   background-color: #cccccc;
-}
-
-ul.navigation-secondary li a:hover span.caret,
-ul.navigation-secondary li a:hover + span.link-details {
-   opacity: 100%;
-   visibility: visible;
+button:hover {
+   color: #444444;
+   background-color: #fcb017;
 }
 
 /*****************************************************************************
@@ -50,12 +24,12 @@ ul.navigation-secondary li a:hover + span.link-details {
 /*****************************************************************************
  * spacing
  ****************************************************************************/
-.margin-top-0 { margin-top: 0px; }
-.margin-bottom-0 { margin-bottom: 0px; }
-.margin-top-15 { margin-top: 15px; }
-.margin-bottom-15 { margin-bottom: 15px; }
-.margin-top-30 { margin-top: 30px; }
-.margin-bottom-30 { margin-bottom: 30px; }
+.margin-top-0     { margin-top:    0px  !important; }
+.margin-bottom-0  { margin-bottom: 0px  !important; }
+.margin-top-15    { margin-top:    15px !important; }
+.margin-bottom-15 { margin-bottom: 15px !important; }
+.margin-top-30    { margin-top:    30px !important; }
+.margin-bottom-30 { margin-bottom: 30px !important; }
 
 /*****************************************************************************
  * grid
