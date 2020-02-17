@@ -1,9 +1,11 @@
 var cube = cube || {};
 
+cube.cube       = document.getElementsByClassName('js-cube')[0];
 cube.sides      = document.getElementsByClassName('js-cube-side');
 cube.transZ     = document.cubeValues.transZ;
-cube.transZdisp = document.getElementById('js-transZ-value');
 cube.rot        = document.cubeValues.rot;
+cube.dir        = document.cubeValues.dir;
+cube.transZdisp = document.getElementById('js-transZ-value');
 cube.rotdisp    = document.getElementById('js-rot-value');
 cube.transZVal  = 122;
 cube.rotVal     = 0;
@@ -35,5 +37,17 @@ cube.rot.oninput = function() {
 
     if (this.value) {
         cube.rotVal = this.value;
+    }
+};
+
+for (radio in cube.dir) {
+    cube.dir[radio].onclick = function() {
+        if (this.value == 'up') {
+            cube.cube.style.animation = "loopUp 30s linear infinite";
+        } else if (this.value == 'right') {
+            cube.cube.style.animation = "loopRight 30s linear infinite";
+        } else if (this.value == 'diagonal') {
+            cube.cube.style.animation = "loopDiagonal 30s linear infinite";
+        }
     }
 }
