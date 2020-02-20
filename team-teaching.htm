@@ -6,14 +6,15 @@
   <link rel="stylesheet" href="./assets/css/reset.css">
   <link rel="stylesheet" href="./assets/css/base.css">
   <link rel="stylesheet" href="./assets/css/main.css">
-  <title>Team Teaching</title>
+  <link rel="stylesheet" href="./assets/css/fluencies.css">
+  <title>Team Teaching | Objects</title>
 </head>
 <body>
 
 <div class="bg-gray">
   <div class="row">
     <div class="column large-10">
-      <h1 class="margin-top-30">Team Teaching</h1>
+      <h1 class="margin-top-30">Team Teaching: JavaScript</h1>
     </div>
     <div class="column large-2">
       <a class="margin-top-30" href="./index.htm">home</a>
@@ -23,8 +24,25 @@
 
 <div class="row">
   <div class="column">
-    <h2 class="margin-top-30">JavaScript: Loops, Conditional Statements, Functions, Variables, Parameters, Arrays, Associative Arrays, Object Creation, Functions, Inheritance, Properties, Methods, Instantiation</h2>
-    <p>(No DOM display yet. Work with objects in the console.)</p>
+    <h2 class="margin-top-30">Objects, Events, DOM manipulation, and Local Storage</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns large-6">
+    <p>Click on an alien below to view its attributes.</p>
+    <div id="js-aliens-container" class="row"><p>Loading . . .</p></div>
+    <div class="row">
+      <div class="columns large-4 end">
+        <a id="js-alien-add" class="alien" href="javascript:void(0);">
+          <img src="./assets/img/plus.jpg" alt="add an alien button">
+          <span>Add Alien</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="columns large-6">
+    <div id="js-alien-attributes-container"></div>
   </div>
 </div>
 

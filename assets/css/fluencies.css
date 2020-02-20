@@ -139,3 +139,15 @@ ul.navigation-secondary li a:hover span.caret {
 #companion-cube img:nth-child(4) { transform: rotateY(-90deg) translateZ(122px); }
 #companion-cube img:nth-child(5) { transform: rotateX(90deg)  translateZ(122px); }
 #companion-cube img:nth-child(6) { transform: rotateX(-90deg) translateZ(122px); }
+
+/*****************************************************************************
+ * aliens
+ ****************************************************************************/
+a.alien {
+   text-decoration: none;
+   text-align: center;
+}
+
+a > img { border: 1px solid #cccccc; }
+
+span.alien-red { color: #ff0000; }
