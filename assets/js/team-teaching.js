@@ -7,7 +7,7 @@
  * Not strictly JSON, but you can use JSON if you want. Just parse your JSON
  * before using it to get it to this state: JSON.parse(text);
  *****************************************************************************/
-var aliens = {
+var aliens = JSON.parse(localStorage.getItem('aliens')) || {
 
     et : {
         species: 'E.T.',
@@ -29,14 +29,14 @@ var aliens = {
         movie: 'The X-Files'
     },
 
-    martian : {
-        species: 'Martian',
-        homeWorld: 'Mars',
-        discovered: 'Earth',
+    klingon : {
+        species: 'Klingon',
+        homeWorld: 'Kronos',
+        discovered: 'unknown',
         isHazardous: true,
-        info: 'Martians kill you with "heat-rays"!',
-        img: './assets/img/martian.jpg',
-        movie: 'War of the Worlds'
+        info: 'Klingons are moody.',
+        img: './assets/img/klingon.jpg',
+        movie: 'Star Trek'
     },
 
     predator : {
@@ -57,6 +57,16 @@ var aliens = {
         info: 'Xenomorph will punch through your skull!',
         img: './assets/img/xenomorph.jpg',
         movie: 'Aliens'
+    },
+
+    yoda : {
+        species: 'Yoda',
+        homeWorld: 'Dagobah???',
+        discovered: 'unknown',
+        isHazardous: false,
+        info: '"Do or do not. There is no try."',
+        img: './assets/img/yoda.jpg',
+        movie: 'Empire Strikes Back'
     }
 };
 
@@ -246,6 +256,7 @@ ALIEN.init = function() {
     this.aliensContainer     = document.getElementById('js-aliens-container');
     this.alienAttrsContainer = document.getElementById('js-alien-attributes-container');
 
+    // TODO: need to increment this counter in page load if localStorage already exists.
     this.newAlienCount = 1;
 
     // create all the alien objects
