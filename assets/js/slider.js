@@ -43,11 +43,11 @@ CUBE.rot.oninput = function() {
 for (radio in CUBE.dir) {
     CUBE.dir[radio].onclick = function() {
         if (this.value == 'up') {
-            CUBE.CUBE.style.animation = "loopUp 30s linear infinite";
+            CUBE.cube.style.animation = "loopUp 30s linear infinite";
         } else if (this.value == 'right') {
-            CUBE.CUBE.style.animation = "loopRight 30s linear infinite";
+            CUBE.cube.style.animation = "loopRight 30s linear infinite";
         } else if (this.value == 'diagonal') {
-            CUBE.CUBE.style.animation = "loopDiagonal 30s linear infinite";
+            CUBE.cube.style.animation = "loopDiagonal 30s linear infinite";
         }
     }
 }
