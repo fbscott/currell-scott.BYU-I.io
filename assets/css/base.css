@@ -22,6 +22,16 @@ h4, h5, h6, p, a {
 
 p { display: block; }
 
+th, td {
+   text-align: center;
+   padding: 10px;
+   border: 1px solid #cccccc;
+   min-width: 125px;
+   max-width: 125px;
+}
+
+strong { font-weight: bold; }
+
 select, input, button { height: 2.5em; }
 
 input {
@@ -32,12 +42,4 @@ input {
 input[type="radio"] {
    vertical-align: middle;
    margin: 0;
-}
-
-th, td {
-   text-align: center;
-   padding: 10px;
-   border: 1px solid #cccccc;
-   min-width: 125px;
-   max-width: 125px;
 }
