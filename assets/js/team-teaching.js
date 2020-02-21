@@ -128,14 +128,14 @@ ALIEN.createAliens = function(options) {
  * UPDATE THE DOM
  * Iterates over the aliens object and appends each property to the DOM.
  *****************************************************************************/
-ALIEN.addAliensToDOM = function() {
+ALIEN.addAliensToDOM = function(options) {
     this.aliensContainer.innerHTML = '';
 
-    for (const property in aliens) {
+    for (const property in options) {
         let _alienNode = `<div class="columns large-4 end">
                             <a class="alien js-alien" href="javascript:void(0);" data-alien="${property}">
-                              <img src="${aliens[property].img}" alt="${aliens[property].species}">
-                              <span>${aliens[property].species}</span>
+                              <img src="${options[property].img}" alt="${options[property].species}">
+                              <span>${options[property].species}</span>
                             </a>
                           </div>`;
 
@@ -181,7 +181,11 @@ ALIEN.showAlienData = function() {
     }
 };
 
-ALIEN.createNewAlien = function() {
+/******************************************************************************
+ * CREATE NEW ALIEN
+ * Creates a new alien on button click. Adds it to the 'aliens' object.
+ *****************************************************************************/
+ALIEN.createNewAlien = function(options) {
     let _this = this;
     let _addButton = document.getElementById('js-alien-add');
 
@@ -194,12 +198,42 @@ ALIEN.createNewAlien = function() {
         // add the new alien to the aliens object
         aliens['new_' + _this.newAlienCount] = _this['new_' + _this.newAlienCount];
 
-        _this.addAliensToDOM();
+        _this.addAliensToDOM(options);
 
         _this.showAlienData();
 
         // increment the new alien counter so existing aliens aren't overwritten
         _this.newAlienCount ++;
+    });
+};
+
+/******************************************************************************
+ * LOCAL STORAGE -- SETTER
+ *****************************************************************************/
+ALIEN.setState = function(options) {
+    let _button = document.getElementById('js-save');
+
+    _button.addEventListener('click', function() {
+        localStorage.setItem('aliens', JSON.stringify(options));
+    });
+};
+
+/******************************************************************************
+ * LOCAL STORAGE -- GETTER
+ *****************************************************************************/
+ALIEN.getState = function() {
+    return JSON.parse(localStorage.getItem('aliens'));
+};
+
+/******************************************************************************
+ * LOCAL STORAGE -- CLEAR
+ *****************************************************************************/
+ALIEN.clearState = function() {
+    let _button = document.getElementById('js-clear');
+    let _obj;
+
+    _button.addEventListener('click', function() {
+        localStorage.removeItem('aliens');
     });
 };
 
@@ -211,19 +245,32 @@ ALIEN.init = function() {
     // DOM elements
     this.aliensContainer     = document.getElementById('js-aliens-container');
     this.alienAttrsContainer = document.getElementById('js-alien-attributes-container');
+
     this.newAlienCount = 1;
 
-    // clear out the container so duplicates aren't added
-    // this.aliensContainer.innerHTML = '';
-
     // create all the alien objects
-    this.createAliens(aliens);
-    // add the aliens to the grid container
-    this.addAliensToDOM();
-    // display data for clicked alien
-    this.showAlienData();
+    if (localStorage.hasOwnProperty('aliens')) {
+        let _aliens = this.getState()
 
-    this.createNewAlien();
+        this.createAliens(_aliens);
+        this.addAliensToDOM(_aliens);
+        // add the aliens to the grid container
+        // display data for clicked alien
+        this.showAlienData();
+        // add new alien to aliens object and update the DOM
+        this.createNewAlien(_aliens);
+    } else {
+        this.createAliens(aliens);
+        this.addAliensToDOM(aliens);
+        // add the aliens to the grid container
+        // display data for clicked alien
+        this.showAlienData();
+        // add new alien to aliens object and update the DOM
+        this.createNewAlien(aliens);
+    }
+    // local storage
+    this.setState(aliens);
+    this.clearState();
 };
 
 ALIEN.init();
