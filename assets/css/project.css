@@ -1,0 +1,41 @@
+/*****************************************************************************
+ * Adapted from David Walsh's Create a CSS Flipping Animation
+ * Source: https://davidwalsh.name/css-flip
+ ****************************************************************************/
+
+.panel-container {
+   /* 3D rotational effect */
+   perspective: 1000px;
+}
+
+.panel-flip {
+   display: block;
+   position: relative;
+   /* prevents div from collapsing */
+   min-height: 1px;
+   transition: 300ms;
+   transform-style: preserve-3d;
+}
+
+.panel-flip.flip { transform: rotateY(180deg); }
+
+.panel-front,
+.panel-back {
+   position: absolute;
+   padding: 30px;
+   border: 1px solid #cccccc;
+   backface-visibility: hidden;
+   cursor: pointer;
+   /* needed for FireFox */
+   transform: rotateX(0deg);
+}
+
+.panel-front {
+   z-index: 2;
+   background-color: #dedeff;
+}
+.panel-back  {
+   background-color: #ffdede;
+   z-index: 1;
+   transform: rotateY(180deg);
+}
