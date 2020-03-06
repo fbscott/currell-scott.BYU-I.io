@@ -12,7 +12,9 @@
    display: block;
    position: relative;
    /* prevents div from collapsing */
-   min-height: 1px;
+   min-height: 225px;
+   min-width: 175px;
+   max-width: 175px;
    transition: 300ms;
    transform-style: preserve-3d;
 }
@@ -22,20 +24,29 @@
 .panel-front,
 .panel-back {
    position: absolute;
-   padding: 30px;
    border: 1px solid #cccccc;
    backface-visibility: hidden;
    cursor: pointer;
+   min-height: 175px;
+   min-width: 175px;
+   max-height: 175px;
+   max-width: 175px;
+   overflow: hidden;
    /* needed for FireFox */
    transform: rotateX(0deg);
 }
 
 .panel-front {
+   padding: 30px;
    z-index: 2;
-   background-color: #dedeff;
+   background-color: #040b28;
 }
+
 .panel-back  {
    background-color: #ffdede;
+   background-size: cover;
    z-index: 1;
+   background-position-x: center;
+   background-position-y: center;
    transform: rotateY(180deg);
 }
