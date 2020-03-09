@@ -117,27 +117,51 @@ MM.isMatch = (arr) => {
  * PANEL FLIPPER
  * Flips the panels over when clicked
  *****************************************************************************/
-MM.flipPanels = () => {
+MM.flipPanels = (el) => {
 
     const MAX_FLIP_COUNT = 2;
+
+    let _el = el.currentTarget;
+
+    // flip a max of 2 panels at a time, but only those that are not already flipped or disabled
+    if (!_el.classList.contains('flip', 'disabled') && MM.panelsFlipped < MAX_FLIP_COUNT) {
+
+        _el.classList.toggle('flip');
+
+        MM.flippedPanels = document.getElementsByClassName('js-panel-flip flip');
+
+        // check flipped panels to make sure they're a match
+        if (MM.isMatch(MM.flippedPanels)) {
+            [].forEach.call(MM.flippedPanels, function(elem) {
+                // prevent them from flipping back over once matched
+                elem.classList.add('disabled');
+            });
+        }
+
+        MM.panelsFlipped++;
+        MM.score++;
+    // flip a panel back over if it's already flipped
+    } else if(_el.classList.contains('flip', 'disabled')) {
+
+        _el.classList.toggle('flip');
+        
+        MM.panelsFlipped--;
+    }
+};
+
+/******************************************************************************
+ * ON PANEL CLICK
+ * Listens for panel click event
+ *****************************************************************************/
+MM.onPanelClick = () => {
+
     // all panels
     let _flippers = document.getElementsByClassName('js-panel-flip');
-    let _flippedPanels = document.getElementsByClassName('js-panel-flip flip');
 
     // flip panels on click
     for (let i = 0; i < _flippers.length; i++) {
-        _flippers[i].addEventListener('click', function() {
-            // flip a max of 2 panels at a time
-            if (!this.classList.contains('flip') && MM.panelsFlipped < MAX_FLIP_COUNT) {
-                this.classList.toggle('flip');
-                MM.panelsFlipped++;
-                MM.score++;
-            // flip a panel back over if it's already flipped
-            } else if(this.classList.contains('flip')) {
-                this.classList.toggle('flip');
-                MM.panelsFlipped--;
-            }
-        });
+        let _flipper = _flippers[i];
+        _flipper.addEventListener('click', MM.flipPanels.bind(_flipper), true);
     }
 };
 
@@ -181,7 +205,7 @@ MM.updateTheDOM = data => {
     MM.panelContainer.innerHTML = _panels;
 
     // add flip logic
-    MM.flipPanels();
+    MM.onPanelClick();
 };
 
 /******************************************************************************

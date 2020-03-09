@@ -19,7 +19,10 @@
    transform-style: preserve-3d;
 }
 
-.panel-flip.flip { transform: rotateY(180deg); }
+.panel-flip.flip,
+.panel-flip.disabled {
+   transform: rotateY(180deg);
+}
 
 .panel-front,
 .panel-back {
