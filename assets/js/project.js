@@ -119,12 +119,10 @@ MM.isMatch = (arr) => {
  *****************************************************************************/
 MM.flipPanels = (el) => {
 
-    const MAX_FLIP_COUNT = 2;
-
     let _el = el.currentTarget;
 
     // flip a max of 2 panels at a time, but only those that are not already flipped or disabled
-    if (!_el.classList.contains('flip', 'disabled') && MM.panelsFlipped < MAX_FLIP_COUNT) {
+    if (!_el.classList.contains('flip', 'disabled') && MM.flippedCount < MM.maxFlipCount) {
 
         _el.classList.toggle('flip');
 
@@ -132,20 +130,31 @@ MM.flipPanels = (el) => {
 
         // check flipped panels to make sure they're a match
         if (MM.isMatch(MM.flippedPanels)) {
-            [].forEach.call(MM.flippedPanels, function(elem) {
+            [].forEach.call(MM.flippedPanels, function(flippedPanel) {
                 // prevent them from flipping back over once matched
-                elem.classList.add('disabled');
+                flippedPanel.classList.add('disabled', 'js-disabled');
+                MM.maxFlipCount += 1;
             });
         }
 
-        MM.panelsFlipped++;
+        let _disabledPanels = document.getElementsByClassName('js-disabled');
+
+        [].forEach.call(_disabledPanels, function(disabledPanel) {
+            disabledPanel.classList.remove('flip');
+            // remove click handler
+            // allows other panels to be flipped after match
+            disabledPanel.removeEventListener('click', MM.flipPanels);
+        });
+
+        MM.flippedCount++;
         MM.score++;
+
     // flip a panel back over if it's already flipped
     } else if(_el.classList.contains('flip', 'disabled')) {
 
         _el.classList.toggle('flip');
         
-        MM.panelsFlipped--;
+        MM.flippedCount--;
     }
 };
 
@@ -156,12 +165,13 @@ MM.flipPanels = (el) => {
 MM.onPanelClick = () => {
 
     // all panels
-    let _flippers = document.getElementsByClassName('js-panel-flip');
+    MM.panels = document.getElementsByClassName('js-panel-flip');
 
     // flip panels on click
-    for (let i = 0; i < _flippers.length; i++) {
-        let _flipper = _flippers[i];
-        _flipper.addEventListener('click', MM.flipPanels.bind(_flipper), true);
+    for (let i = 0; i < MM.panels.length; i++) {
+        let _flipper = MM.panels[i];
+        // _flipper.addEventListener('click', MM.flipPanels.bind(_flipper));
+        _flipper.addEventListener('click', MM.flipPanels);
     }
 };
 
@@ -242,8 +252,9 @@ MM.ajax = (url, loadCallback) => {
  * Do all the things
  *****************************************************************************/
 MM.init = () => {
-    
-    MM.panelsFlipped = 0; // number of flipped panels
+
+    MM.maxFlipCount = 2;
+    MM.flippedCount = 0; // number of flipped panels
     MM.score = 0;
     MM.panelContainer = document.getElementById('js-panel-container');
     MM.baseURL = 'https://pixabay.com/api/';

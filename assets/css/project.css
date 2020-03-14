@@ -24,6 +24,11 @@
    transform: rotateY(180deg);
 }
 
+.panel-flip.disabled .panel-back {
+   filter: grayscale(100%);
+   transition: filter 300ms ease-in-out 300ms;
+}
+
 .panel-front,
 .panel-back {
    position: absolute;
