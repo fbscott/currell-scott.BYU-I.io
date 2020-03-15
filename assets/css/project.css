@@ -58,3 +58,14 @@
    background-position-y: center;
    transform: rotateY(180deg);
 }
+
+.score {
+   font-size: 2em;
+   padding: 0.5em 0;
+   margin: 0.5em auto;
+   background-color: #cccccc;
+   display: block;
+   border-radius: 0.25em;
+   width: 100%;
+   text-align: center;
+}
