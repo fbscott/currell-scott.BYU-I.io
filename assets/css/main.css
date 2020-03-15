@@ -1,20 +1,6 @@
 /*****************************************************************************
- * buttons
+ * MAIN STYLES -- NO BASE TAGS OR ELEMETS!!!
  ****************************************************************************/
-button {
-   color: #ffffff;
-   background-color: #444444;
-   border: none;
-   font-style: italic;
-   font-weight: bold;
-   transition: color 300ms,
-               background-color 300ms;
-}
-
-button:hover {
-   color: #444444;
-   background-color: #fcb017;
-}
 
 /*****************************************************************************
  * colors

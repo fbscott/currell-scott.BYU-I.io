@@ -7,6 +7,9 @@ out/
 # ignore sftp-config
 # *.json
 
+# workspace files
+*.sublime-workspace
+
 # ignore the following file types
 *.doc
 *.docx
