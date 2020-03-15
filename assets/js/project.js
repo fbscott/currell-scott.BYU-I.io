@@ -1,6 +1,35 @@
 // global namespace: Memory Match (MM)
 var MM = MM || {};
 
+// default theme
+MM.query = 'bbq';
+
+/******************************************************************************
+ * GET THEME
+ * Get the user-provided theme. Receives a string of just a few words and
+ * updates the global namespace. Theme is collected on form submit.
+ * @param  {Event} e - Submit()
+ *****************************************************************************/
+MM.getTheme = e => {
+
+    let _memMatch = document.memMatch;
+
+    _memMatch.addEventListener('submit', function(e) {
+        
+        // keep page from refreshing
+        e.preventDefault();
+
+        if (!!_memMatch.theme.value) {
+            MM.query = _memMatch.theme.value;
+        } else {
+            MM.query = 'bbq';
+        }
+
+        // re-initialize the game after a new theme is selected
+        MM.init();
+    });
+};
+
 /******************************************************************************
  * IS VALID NUMBER
  * Validation check. See if a passed number already exists in an array.
@@ -259,7 +288,8 @@ MM.init = () => {
     MM.panelContainer = document.getElementById('js-panel-container');
     MM.baseURL = 'https://pixabay.com/api/';
     MM.key = '15462183-52054d7c5a68977efe09803b8';
-    MM.query = 'yellow+flower';
+
+    MM.getTheme();
 
     MM.ajax(MM.baseURL + '?key=' +
             MM.key + '&q=' +

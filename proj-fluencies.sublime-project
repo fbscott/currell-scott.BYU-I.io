@@ -1,16 +1,16 @@
 {
-	"folders":
-	[
-		{
-			"path": ".",
-			"folder_exclude_patterns":
-			[
-				".git"
-			],
+   "folders":
+   [
+      {
+         "path": ".",
+         "folder_exclude_patterns":
+         [
+            ".git"
+         ],
          "file_exclude_patterns":
          [
             "proj-fluencies.sublime-project"
          ]
-		}
-	]
+      }
+   ]
 }
