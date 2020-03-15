@@ -259,7 +259,7 @@ MM.init = () => {
     MM.panelContainer = document.getElementById('js-panel-container');
     MM.baseURL = 'https://pixabay.com/api/';
     MM.key = '15462183-52054d7c5a68977efe09803b8';
-    MM.query = 'yellow+flower';
+    MM.query = 'bbq';
 
     MM.ajax(MM.baseURL + '?key=' +
             MM.key + '&q=' +
