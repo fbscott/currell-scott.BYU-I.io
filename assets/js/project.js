@@ -3,6 +3,7 @@ var MM = MM || {};
 
 // default theme
 MM.query = 'bbq';
+MM.highScore = 0;
 
 /******************************************************************************
  * GET THEME
@@ -143,6 +144,23 @@ MM.isMatch = (arr) => {
 };
 
 /******************************************************************************
+ * ADVANCE SCORE
+ * Advance game and best scores.
+ *****************************************************************************/
+MM.advanceScore = () => {
+
+    MM.score++;
+
+    MM.scoreCard.innerHTML = MM.score;
+
+    if ((MM.flippedCount === 12 && MM.highScore === 0) ||
+        MM.flippedCount === 12 && MM.score < MM.highScore) {
+        MM.highScore = MM.score;
+        MM.highScoreCard.innerHTML = MM.score;
+    }
+};
+
+/******************************************************************************
  * PANEL FLIPPER
  * Flips the panels over when clicked
  *****************************************************************************/
@@ -176,7 +194,8 @@ MM.flipPanels = (el) => {
         });
 
         MM.flippedCount++;
-        MM.score++;
+        
+        MM.advanceScore();
 
     // flip a panel back over if it's already flipped
     } else if(_el.classList.contains('flip', 'disabled')) {
@@ -223,7 +242,7 @@ MM.updateTheDOM = data => {
         }
 
         // individual panel markup
-        _panels += `<div class="column large-3">
+        _panels += `<div class="column small-3">
                      <div class="panel-container">
                        <div class="panel-flip js-panel-flip" data-index="img-${IMG_INDICES[i]}">
                          <div class="panel-front">
@@ -283,9 +302,15 @@ MM.ajax = (url, loadCallback) => {
 MM.init = () => {
 
     MM.maxFlipCount = 2;
-    MM.flippedCount = 0; // number of flipped panels
     MM.score = 0;
+    MM.flippedCount = 0; // number of flipped panels
+    
+    MM.scoreCard      = document.getElementById('js-score');
+    MM.highScoreCard  = document.getElementById('js-high-score');
     MM.panelContainer = document.getElementById('js-panel-container');
+
+    MM.scoreCard.innerHTML = MM.score;
+
     MM.baseURL = 'https://pixabay.com/api/';
     MM.key = '15462183-52054d7c5a68977efe09803b8';
 
