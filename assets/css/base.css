@@ -7,6 +7,8 @@ body {
    color: #444444;
    margin: 0 auto;
    line-height: 1.25;
+   /* keeps the page from jittering when a new game is initialized */
+   overflow: scroll;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, ul, select, input, button { margin-bottom: 30px; }

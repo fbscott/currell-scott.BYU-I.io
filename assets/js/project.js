@@ -1,35 +1,14 @@
 // global namespace: Memory Match (MM)
 var MM = MM || {};
 
-// default theme
-MM.query = 'bbq';
+MM.query = 'bbq'; // default theme
 MM.highScore = 0;
 
-/******************************************************************************
- * GET THEME
- * Get the user-provided theme. Receives a string of just a few words and
- * updates the global namespace. Theme is collected on form submit.
- * @param  {Event} e - Submit()
- *****************************************************************************/
-MM.getTheme = e => {
-
-    let _memMatch = document.memMatch;
-
-    _memMatch.addEventListener('submit', function(e) {
-        
-        // keep page from refreshing
-        e.preventDefault();
-
-        if (!!_memMatch.theme.value) {
-            MM.query = _memMatch.theme.value;
-        } else {
-            MM.query = 'bbq';
-        }
-
-        // re-initialize the game after a new theme is selected
-        MM.init();
-    });
-};
+// DOM elements
+MM.scoreCard      = document.getElementById('js-score');
+MM.highScoreCard  = document.getElementById('js-high-score');
+MM.panelContainer = document.getElementById('js-panel-container');
+MM.userInput      = document.memMatch;
 
 /******************************************************************************
  * IS VALID NUMBER
@@ -103,6 +82,7 @@ MM.getImageIndices = () => {
  * @return {Array} shuffled array
  *****************************************************************************/
 MM.shuffleArray = array => {
+
   let _currentIndex = array.length;
   let _temporaryValue;
   let _randomIndex;
@@ -121,7 +101,7 @@ MM.shuffleArray = array => {
   }
 
   return array;
-}
+};
 
 /******************************************************************************
  * IS A MATCH
@@ -129,7 +109,7 @@ MM.shuffleArray = array => {
  * @param {Array} arr - array of DOM elements
  * @return {Bool} _isMatch
  *****************************************************************************/
-MM.isMatch = (arr) => {
+MM.isMatch = arr => {
 
     let _isMatch = false;
 
@@ -164,14 +144,14 @@ MM.advanceScore = () => {
  * PANEL FLIPPER
  * Flips the panels over when clicked
  *****************************************************************************/
-MM.flipPanels = (el) => {
+MM.flipPanels = el => {
 
-    let _el = el.currentTarget;
+    const EL = el.currentTarget;
 
     // flip a max of 2 panels at a time, but only those that are not already flipped or disabled
-    if (!_el.classList.contains('flip', 'disabled') && MM.flippedCount < MM.maxFlipCount) {
+    if (!EL.classList.contains('flip', 'disabled') && MM.flippedCount < MM.maxFlipCount) {
 
-        _el.classList.toggle('flip');
+        EL.classList.toggle('flip');
 
         MM.flippedPanels = document.getElementsByClassName('js-panel-flip flip');
 
@@ -184,9 +164,9 @@ MM.flipPanels = (el) => {
             });
         }
 
-        let _disabledPanels = document.getElementsByClassName('js-disabled');
+        const DISABLED_PANELS = document.getElementsByClassName('js-disabled');
 
-        [].forEach.call(_disabledPanels, function(disabledPanel) {
+        [].forEach.call(DISABLED_PANELS, function(disabledPanel) {
             disabledPanel.classList.remove('flip');
             // remove click handler
             // allows other panels to be flipped after match
@@ -198,9 +178,9 @@ MM.flipPanels = (el) => {
         MM.advanceScore();
 
     // flip a panel back over if it's already flipped
-    } else if(_el.classList.contains('flip', 'disabled')) {
+    } else if(EL.classList.contains('flip', 'disabled')) {
 
-        _el.classList.toggle('flip');
+        EL.classList.toggle('flip');
         
         MM.flippedCount--;
     }
@@ -217,9 +197,7 @@ MM.onPanelClick = () => {
 
     // flip panels on click
     for (let i = 0; i < MM.panels.length; i++) {
-        let _flipper = MM.panels[i];
-        // _flipper.addEventListener('click', MM.flipPanels.bind(_flipper));
-        _flipper.addEventListener('click', MM.flipPanels);
+        MM.panels[i].addEventListener('click', MM.flipPanels);
     }
 };
 
@@ -229,27 +207,27 @@ MM.onPanelClick = () => {
  *****************************************************************************/
 MM.updateTheDOM = data => {
 
-    const IMG_INDICES = MM.shuffleArray(MM.getImageIndices());
+    const IMG_ARRAY = MM.shuffleArray(MM.getImageIndices());
 
     // build panel container
-    let _panels = `<div class="row">`;
+    let _panels = `<div class="row slide-in-1" style="left: 2000px;">`;
 
     // add 12 panels to the container
-    for (let i = 0; i < IMG_INDICES.length; i++) {
+    for (let i = 0; i < IMG_ARRAY.length; i++) {
         // break panels up into rows of four
         if (i != 0 && i % 4 === 0) {
-            _panels += `</div><div class="row">`;
+            _panels += `</div><div class="row slide-in-${(i % 3) + 1}" style="left: 2000px;">`;
         }
 
         // individual panel markup
         _panels += `<div class="column small-3">
                      <div class="panel-container">
-                       <div class="panel-flip js-panel-flip" data-index="img-${IMG_INDICES[i]}">
+                       <div class="panel-flip js-panel-flip" data-index="${data.hits[IMG_ARRAY[i]].id}">
                          <div class="panel-front">
                            <img src="./assets/img/question_mark.png" width="113" height="113" />
                          </div>
                          <div class="panel-back"
-                              style="background-image: url(${data.hits[IMG_INDICES[i]].webformatURL})">
+                              style="background-image: url(${data.hits[IMG_ARRAY[i]].webformatURL})">
                          </div>
                        </div>
                      </div>
@@ -267,6 +245,28 @@ MM.updateTheDOM = data => {
 };
 
 /******************************************************************************
+ * SET THEME
+ * Set the theme to the one provided by the user. Receives a string of just a
+ * few words and updates the global namespace. Theme is collected on form
+ * submit.
+ *****************************************************************************/
+MM.setTheme = () => {
+    
+    if (!!MM.userInput.theme.value) {
+        MM.query = MM.userInput.theme.value;
+    } else {
+        MM.query = 'bbq';
+    }
+};
+
+/******************************************************************************
+ * GET THEME
+ * Returns the user-defined theme for the game.
+ * @return {String} MM.query - user-defined theme
+ *****************************************************************************/
+MM.getTheme = () => MM.query;
+
+/******************************************************************************
  * LOAD DOCUMENT
  * Perform an XMLHttpRequest (AJAX) request and pass the response data to the
  * callback.
@@ -277,7 +277,7 @@ MM.updateTheDOM = data => {
 MM.ajax = (url, loadCallback) => {
 
     // placeholder while loading
-    MM.panelContainer.innerHTML = `<div class="row"><div class="column"><p>Loading game . . .</p></div></div>`;
+    MM.panelContainer.innerHTML = `<div class="row"><div class="column"><div class="spinner"></div></div></div>`;
 
     let _xhr = new XMLHttpRequest();
 
@@ -296,31 +296,81 @@ MM.ajax = (url, loadCallback) => {
 };
 
 /******************************************************************************
+ * CONFIGURE API
+ * Set up the key/value pairs needed to make the API call to pixabay. Base URL
+ * and API key remain constant, but the query (theme) key is dynamic.
+ *****************************************************************************/
+MM.configureAPI = () => {
+
+    MM.baseURL = 'https://pixabay.com/api/';
+    MM.key     = '15462183-52054d7c5a68977efe09803b8';
+    MM.query   = MM.getTheme();
+};
+
+MM.setGameStats = () => {
+
+    let _gameStats = {
+        theme : 'bbq',
+        highScore : MM.highScore
+    };
+
+    localStorage.setItem('gameData', JSON.stringify(_gameStats));
+};
+
+MM.getGameStats = () => {
+    
+    return JSON.parse(localStorage.getItem('gameData'));
+};
+
+/******************************************************************************
  * INITIALIZER
  * Do all the things
  *****************************************************************************/
 MM.init = () => {
 
+    // default values
     MM.maxFlipCount = 2;
-    MM.score = 0;
+    MM.score        = 0;
     MM.flippedCount = 0; // number of flipped panels
-    
-    MM.scoreCard      = document.getElementById('js-score');
-    MM.highScoreCard  = document.getElementById('js-high-score');
-    MM.panelContainer = document.getElementById('js-panel-container');
 
     MM.scoreCard.innerHTML = MM.score;
 
-    MM.baseURL = 'https://pixabay.com/api/';
-    MM.key = '15462183-52054d7c5a68977efe09803b8';
-
-    MM.getTheme();
+    MM.configureAPI();
 
     MM.ajax(MM.baseURL + '?key=' +
             MM.key + '&q=' +
             MM.query + '&image_type=photo',
             MM.updateTheDOM);
-
 };
 
-MM.init();
+/******************************************************************************
+ * ON FORM SUBMIT
+ * Re-initialize game on submit
+ *****************************************************************************/
+MM.userInput.addEventListener('submit', function(e) {
+
+    // keep page from refreshing
+    e.preventDefault();
+
+    // set the theme as provided by the user
+    MM.setTheme();
+
+    let _slide1 = document.getElementsByClassName('slide-in-1')[0];
+    let _slide2 = document.getElementsByClassName('slide-in-2')[0];
+    let _slide3 = document.getElementsByClassName('slide-in-3')[0];
+
+    // initialize the game
+    if (_slide1 && _slide2 && _slide3) {
+
+        _slide1.classList.add('slide-out-1');
+        _slide2.classList.add('slide-out-2');
+        _slide3.classList.add('slide-out-3');
+        
+        setTimeout(function() {
+            MM.init();
+        }, 1000);
+    // re-initialize the game after a new theme is selected
+    } else {
+        MM.init();
+    }
+});
