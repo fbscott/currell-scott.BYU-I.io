@@ -8,7 +8,42 @@ MM.highScore = 0;
 MM.scoreCard      = document.getElementById('js-score');
 MM.highScoreCard  = document.getElementById('js-high-score');
 MM.panelContainer = document.getElementById('js-panel-container');
+MM.loadGame       = document.getElementById('js-load-game');
+MM.saveGame       = document.getElementById('js-save-game');
+MM.clearGame      = document.getElementById('js-clear-game');
 MM.userInput      = document.memMatch;
+
+// Event listeners
+MM.loadGame.addEventListener('click', function() { MM.loadGameData(); });
+MM.saveGame.addEventListener('click', function() { MM.setGameStats(); });
+MM.clearGame.addEventListener('click', function() { MM.clearGameStats(); });
+MM.userInput.addEventListener('submit', function(e) {
+
+    // keep page from refreshing
+    e.preventDefault();
+
+    // set the theme as provided by the user
+    MM.setTheme();
+
+    let _slide1 = document.getElementsByClassName('slide-in-1')[0];
+    let _slide2 = document.getElementsByClassName('slide-in-2')[0];
+    let _slide3 = document.getElementsByClassName('slide-in-3')[0];
+
+    // initialize the game
+    if (_slide1 && _slide2 && _slide3) {
+
+        _slide1.classList.add('slide-out-1');
+        _slide2.classList.add('slide-out-2');
+        _slide3.classList.add('slide-out-3');
+        
+        setTimeout(function() {
+            MM.init();
+        }, 750);
+    // re-initialize the game after a new theme is selected
+    } else {
+        MM.init();
+    }
+});
 
 /******************************************************************************
  * IS VALID NUMBER
@@ -115,7 +150,7 @@ MM.isMatch = arr => {
 
     for (let i = 0; i < arr.length; i++) {
         if (arr.length === 2 &&
-            arr[0].dataset.index === arr[1].dataset.index) {
+            arr[0].dataset.id === arr[1].dataset.id) {
             _isMatch = true;
         }
     }
@@ -222,7 +257,7 @@ MM.updateTheDOM = data => {
         // individual panel markup
         _panels += `<div class="column small-3">
                      <div class="panel-container">
-                       <div class="panel-flip js-panel-flip" data-index="${data.hits[IMG_ARRAY[i]].id}">
+                       <div class="panel-flip js-panel-flip" data-id="${data.hits[IMG_ARRAY[i]].id}">
                          <div class="panel-front">
                            <img src="./assets/img/question_mark.png" width="113" height="113" />
                          </div>
@@ -307,19 +342,45 @@ MM.configureAPI = () => {
     MM.query   = MM.getTheme();
 };
 
+/******************************************************************************
+ * SET GAME STATS
+ * Set game data to local storage.
+ *****************************************************************************/
 MM.setGameStats = () => {
 
     let _gameStats = {
-        theme : 'bbq',
+        theme     : MM.getTheme(),
         highScore : MM.highScore
     };
 
     localStorage.setItem('gameData', JSON.stringify(_gameStats));
 };
 
-MM.getGameStats = () => {
-    
-    return JSON.parse(localStorage.getItem('gameData'));
+/******************************************************************************
+ * GET GAME STATS
+ * Get game data from local storage.
+ *****************************************************************************/
+MM.getGameStats = () => JSON.parse(localStorage.getItem('gameData'));
+
+/******************************************************************************
+ * CLEAR GAME STATS
+ * Clear game data from local storage.
+ *****************************************************************************/
+MM.clearGameStats = () => { localStorage.removeItem('gameData'); };
+
+/******************************************************************************
+ * LOAD GAME DATA
+ * Get game data from local storage, load it into the DOM, and invoke the game.
+ *****************************************************************************/
+MM.loadGameData = () => {
+
+    let _stats = MM.getGameStats();
+
+    if (_stats) {
+        MM.userInput.theme.value   = _stats.theme;
+        MM.highScoreCard.innerHTML = _stats.highScore
+        MM.userInput.submit.click();
+    }
 };
 
 /******************************************************************************
@@ -342,35 +403,3 @@ MM.init = () => {
             MM.query + '&image_type=photo',
             MM.updateTheDOM);
 };
-
-/******************************************************************************
- * ON FORM SUBMIT
- * Re-initialize game on submit
- *****************************************************************************/
-MM.userInput.addEventListener('submit', function(e) {
-
-    // keep page from refreshing
-    e.preventDefault();
-
-    // set the theme as provided by the user
-    MM.setTheme();
-
-    let _slide1 = document.getElementsByClassName('slide-in-1')[0];
-    let _slide2 = document.getElementsByClassName('slide-in-2')[0];
-    let _slide3 = document.getElementsByClassName('slide-in-3')[0];
-
-    // initialize the game
-    if (_slide1 && _slide2 && _slide3) {
-
-        _slide1.classList.add('slide-out-1');
-        _slide2.classList.add('slide-out-2');
-        _slide3.classList.add('slide-out-3');
-        
-        setTimeout(function() {
-            MM.init();
-        }, 1000);
-    // re-initialize the game after a new theme is selected
-    } else {
-        MM.init();
-    }
-});
