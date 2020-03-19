@@ -5,16 +5,16 @@
 
 .panel-container {
    /* 3D rotational effect */
-   perspective: 1000px;
+   perspective: 62.5rem;
 }
 
 .panel-flip {
    display: block;
    position: relative;
    /* prevents div from collapsing */
-   min-height: 225px;
-   min-width: 175px;
-   max-width: 175px;
+   min-height: 14.063rem;
+   min-width: 10.938rem;
+   max-width: 10.938rem;
    transition: 300ms;
    transform-style: preserve-3d;
 }
@@ -35,10 +35,10 @@
    border: 1px solid #cccccc;
    backface-visibility: hidden;
    cursor: pointer;
-   min-height: 175px;
-   min-width: 175px;
-   max-height: 175px;
-   max-width: 175px;
+   min-height: 10.938rem;
+   min-width: 10.938rem;
+   max-height: 10.938rem;
+   max-width: 10.938rem;
    overflow: hidden;
    /* needed for FireFox */
    transform: rotateX(0deg);
@@ -46,7 +46,7 @@
 
 .panel-front {
    background-color: #040b28;
-   padding: 30px;
+   padding: 1.875rem;
    z-index: 2;
 }
 
@@ -60,23 +60,23 @@
 }
 
 .score {
-   font-size: 2em;
-   padding: 0.5em 0;
-   margin: 0.5em auto;
+   font-size: 2rem;
+   padding: 0.5rem 0;
+   margin: 1rem auto;
    background-color: #cccccc;
    display: block;
-   border-radius: 0.25em;
+   border-radius: 0.25rem;
    width: 100%;
    text-align: center;
 }
 
 .spinner {
-   border: 20px solid #cccccc;
-   border-top: 20px solid #040b28;
-   margin: 50px auto 0;
+   border: 1.25rem solid #cccccc;
+   border-top: 1.25rem solid #040b28;
+   margin: 3.125rem auto 0;
    border-radius: 50%;
-   width: 150px;
-   height: 150px;
+   width: 9.375rem;
+   height: 9.375rem;
    -webkit-animation: spinner 500ms linear infinite;
            animation: spinner 500ms linear infinite;
 }
@@ -134,27 +134,27 @@
 }
 
 @-webkit-keyframes slide-in {
-   0%   { left: 1500px; }
-   40%  { left: -30px; }
-   50%  { left: 15px; }
+   0%   { left: 93.75rem; }
+   40%  { left: -1.875rem; }
+   50%  { left: 0.938rem; }
    100% { left: 0; }
 }
 
 @keyframes slide-in {
-   0%   { left: 1500px; }
-   40%  { left: -30px; }
-   50%  { left: 15px; }
+   0%   { left: 93.75rem; }
+   40%  { left: -1.875rem; }
+   50%  { left: 0.938rem; }
    100% { left: 0; }
 }
 
 @-webkit-keyframes slide-out {
    0%   { left: 0; }
-   30%  { left: 30px; }
-   100% { left: -2650px; }
+   30%  { left: 1.875rem; }
+   100% { left: -165.625rem; }
 }
 
 @keyframes slide-out {
    0%   { left: 0; }
-   30%  { left: 30px; }
-   100% { left: -2650px; }
+   30%  { left: 1.875rem; }
+   100% { left: -165.625rem; }
 }

@@ -40,7 +40,8 @@
       <div class="column">
         <form action="" name="memMatch">
           <input type="text" placeholder="enter theme" name="theme" pattern="[a-zA-Z0-9\s]+" />
-          <button type="submit">Play!</button>
+          <button name="submit" type="submit">Play!</button>
+          <input id="js-load-game" type="button" value="Load Game" />
         </form>
       </div>
     </div>
@@ -67,6 +68,12 @@
         </div>
       </div>
       <!-- END SCORE -->
+    </div>
+    <div class="row">
+      <div class="column text-right">
+        <input id="js-save-game" type="button" value="Save Game" />
+        <input id="js-clear-game" type="button" value="Clear Game" />
+      </div>
     </div>
   </div>
 <!---------------------------- END RIGHT-HAND SIDE --------------------------->

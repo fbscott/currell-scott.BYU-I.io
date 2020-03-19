@@ -3,7 +3,7 @@
  ****************************************************************************/
 body {
    font-family: arial;
-   font-size: 16px;
+   font-size: 1rem;
    color: #444444;
    margin: 0 auto;
    line-height: 1.25;
@@ -11,38 +11,37 @@ body {
    overflow-y: scroll;
 }
 
-h1, h2, h3, h4, h5, h6, p, a, ul, select, input, button { margin-bottom: 30px; }
+h1, h2, h3, h4, h5, h6, p, a, ul, select, input, button { margin-bottom: 1.875rem; }
 
-h1 { font-size: 2em;}
+h1 { font-size: 2rem;}
 
-h2 { font-size: 1.5em; }
+h2 { font-size: 1.5rem; }
 
-h3 { font-size: 1.25em; }
+h3 { font-size: 1.25rem; }
 
 h4, h5, h6, p, a {
    display: inline-block;
-   font-size: 1em;
+   font-size: 1rem;
 }
 
 p { display: block; }
 
 th, td {
    text-align: center;
-   padding: 10px;
+   padding: 0.625rem;
    border: 1px solid #cccccc;
-   min-width: 125px;
-   max-width: 125px;
+   min-width: 7.813rem;
+   max-width: 7.813rem;
 }
 
 strong { font-weight: bold; }
 
-button,
 input[type="text"],
-select { height: 2.5em; }
+select { height: 3rem; }
 
 input[type="text"] {
    border: 1px solid #cccccc;
-   padding-left: 1em;
+   padding-left: 1rem;
 }
 
 button,
@@ -51,11 +50,12 @@ input[type="submit"] {
    color: #ffffff;
    background-color: #444444;
    border: none;
-   height: 3em;
-   padding-left: 1em;
-   padding-right: 1em;
+   height: 3rem;
+   padding-left: 1.25rem;
+   padding-right: 1.25rem;
    font-style: italic;
    font-weight: bold;
+   font-size: 1rem;
    transition: color 300ms,
                background-color 300ms;
 }
