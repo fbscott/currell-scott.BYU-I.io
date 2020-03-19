@@ -376,9 +376,11 @@ MM.loadGameData = () => {
 
     let _stats = MM.getGameStats();
 
+    MM.highScore = _stats.highScore;
+
     if (_stats) {
         MM.userInput.theme.value   = _stats.theme;
-        MM.highScoreCard.innerHTML = _stats.highScore
+        MM.highScoreCard.innerHTML = MM.highScore
         MM.userInput.submit.click();
     }
 };
