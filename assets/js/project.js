@@ -11,6 +11,7 @@ MM.panelContainer = document.getElementById('js-panel-container');
 MM.loadGame       = document.getElementById('js-load-game');
 MM.saveGame       = document.getElementById('js-save-game');
 MM.clearGame      = document.getElementById('js-clear-game');
+MM.saveState      = document.getElementById('js-save-state');
 MM.userInput      = document.memMatch;
 
 // Event listeners
@@ -354,6 +355,17 @@ MM.setGameStats = () => {
     };
 
     localStorage.setItem('gameData', JSON.stringify(_gameStats));
+
+    MM.saveState.innerHTML = `<div class="column">
+                                <div class="save-container text-left">
+                                  <p class="margin-bottom-0">Game Saved!</p>
+                                </div>
+                              </div>`;
+    MM.saveState.classList.add('opacity-one');
+
+    setTimeout(function() {
+        MM.saveState.classList.remove('opacity-one');
+    }, 3000);
 };
 
 /******************************************************************************
@@ -366,7 +378,21 @@ MM.getGameStats = () => JSON.parse(localStorage.getItem('gameData'));
  * CLEAR GAME STATS
  * Clear game data from local storage.
  *****************************************************************************/
-MM.clearGameStats = () => { localStorage.removeItem('gameData'); };
+MM.clearGameStats = () => {
+
+    localStorage.removeItem('gameData');
+
+    MM.saveState.innerHTML = `<div class="column">
+                                <div class="save-container text-left">
+                                  <p class="margin-bottom-0">Game Data Deleted.</p>
+                                </div>
+                              </div>`;
+    MM.saveState.classList.add('opacity-one');
+
+    setTimeout(function() {
+        MM.saveState.classList.remove('opacity-one');
+    }, 3000);
+};
 
 /******************************************************************************
  * LOAD GAME DATA
@@ -382,6 +408,17 @@ MM.loadGameData = () => {
         MM.userInput.theme.value   = _stats.theme;
         MM.highScoreCard.innerHTML = MM.highScore
         MM.userInput.submit.click();
+
+        MM.saveState.innerHTML = `<div class="column">
+                                    <div class="save-container text-left">
+                                      <p class="margin-bottom-0">Game Data Loaded.</p>
+                                    </div>
+                                  </div>`;
+        MM.saveState.classList.add('opacity-one');
+
+        setTimeout(function() {
+            MM.saveState.classList.remove('opacity-one');
+        }, 3000);
     }
 };
 

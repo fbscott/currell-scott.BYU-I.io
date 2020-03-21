@@ -2,7 +2,6 @@
  * Adapted from David Walsh's Create a CSS Flipping Animation
  * Source: https://davidwalsh.name/css-flip
  ****************************************************************************/
-
 .panel-container {
    /* 3D rotational effect */
    perspective: 62.5rem;
@@ -68,6 +67,19 @@
    border-radius: 0.25rem;
    width: 100%;
    text-align: center;
+}
+
+.save-container {
+   background-color: #ffa500;
+   padding: 1rem;
+   position: relative;
+   width: 100%;
+   text-align: center;
+}
+
+.save-container p {
+   font-size: 1.25rem;
+   color: #ffffff;
 }
 
 .spinner {
