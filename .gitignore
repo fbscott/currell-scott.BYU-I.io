@@ -1,8 +1,8 @@
 # ignore the following sub folders
+**/zoom_meetings
 */downloads
 .idea/
 out/
-**/zoom_meetings
 
 # ignore sftp-config
 # *.json
@@ -11,13 +11,14 @@ out/
 *.sublime-workspace
 
 # ignore the following file types
+# *.mp4
 *.doc
 *.docx
 *.exe
 *.iml
-# *.mp4
 *.pdf
 *.psd
+*.sublime-workspace
 *.tmp
 *.txt
 *.xls
