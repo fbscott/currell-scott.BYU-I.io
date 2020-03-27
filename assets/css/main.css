@@ -25,6 +25,22 @@
 .absolute { position: absolute; }
 
 /*****************************************************************************
+ * visibility
+ ****************************************************************************/
+.hide { visibility: hidden; }
+.show { visibility: visible; }
+.opacity-none {
+   opacity: 0;
+   transition: opacity 300ms ease-in 300ms;
+}
+.opacity-one {
+   opacity: 1;
+   transition: opacity 300ms ease-in 300ms;
+}
+.display-none { display: none; }
+.display { display: initial; }
+
+/*****************************************************************************
  * text
  ****************************************************************************/
 .bold { font-weight: bold; }
