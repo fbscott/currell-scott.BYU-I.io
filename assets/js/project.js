@@ -339,7 +339,7 @@ MM.ajax = (url, loadCallback) => {
 MM.configureAPI = () => {
 
     MM.baseURL = 'https://pixabay.com/api/';
-    MM.key     = '15462183-52054d7c5a68977efe09803b8';
+    MM.key     = '';
     MM.query   = MM.getTheme();
 };
 
