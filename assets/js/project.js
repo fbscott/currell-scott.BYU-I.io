@@ -1,7 +1,7 @@
 // global namespace: Memory Match (MM)
 var MM = MM || {};
 
-MM.query = 'bbq'; // default theme
+MM.query; // theme
 MM.highScore = 0;
 
 // DOM elements
@@ -15,10 +15,16 @@ MM.saveState      = document.getElementById('js-save-state');
 MM.userInput      = document.memMatch;
 
 // Event listeners
-MM.loadGame.addEventListener('click', function() { MM.loadGameData(); });
-MM.saveGame.addEventListener('click', function() { MM.setGameStats(); });
-MM.clearGame.addEventListener('click', function() { MM.clearGameStats(); });
-MM.userInput.addEventListener('submit', function(e) {
+MM.loadGame.addEventListener('click',   () => { MM.loadGameData();   });
+MM.saveGame.addEventListener('click',   () => { MM.setGameStats();   });
+MM.clearGame.addEventListener('click',  () => { MM.clearGameStats(); });
+MM.userInput.addEventListener('submit', e  => { MM.setAndAnimage(e); });
+
+/******************************************************************************
+ * SET THEME AND ANIMATE SLIDES
+ * @param {Event} e - event
+ *****************************************************************************/
+MM.setAndAnimage = e => {
 
     // keep page from refreshing
     e.preventDefault();
@@ -37,14 +43,14 @@ MM.userInput.addEventListener('submit', function(e) {
         _slide2.classList.add('slide-out-2');
         _slide3.classList.add('slide-out-3');
         
-        setTimeout(function() {
+        setTimeout(() => {
             MM.init();
         }, 750);
     // re-initialize the game after a new theme is selected
     } else {
         MM.init();
     }
-});
+};
 
 /******************************************************************************
  * IS VALID NUMBER
@@ -193,7 +199,7 @@ MM.flipPanels = el => {
 
         // check flipped panels to make sure they're a match
         if (MM.isMatch(MM.flippedPanels)) {
-            [].forEach.call(MM.flippedPanels, function(flippedPanel) {
+            [].forEach.call(MM.flippedPanels, flippedPanel => {
                 // prevent them from flipping back over once matched
                 flippedPanel.classList.add('disabled', 'js-disabled');
                 MM.maxFlipCount += 1;
@@ -202,7 +208,7 @@ MM.flipPanels = el => {
 
         const DISABLED_PANELS = document.getElementsByClassName('js-disabled');
 
-        [].forEach.call(DISABLED_PANELS, function(disabledPanel) {
+        [].forEach.call(DISABLED_PANELS, disabledPanel => {
             disabledPanel.classList.remove('flip');
             // remove click handler
             // allows other panels to be flipped after match
@@ -287,7 +293,7 @@ MM.updateTheDOM = data => {
  * submit.
  *****************************************************************************/
 MM.setTheme = () => {
-    
+
     if (!!MM.userInput.theme.value) {
         MM.query = MM.userInput.theme.value;
     } else {
@@ -363,7 +369,7 @@ MM.setGameStats = () => {
                               </div>`;
     MM.saveState.classList.add('opacity-one');
 
-    setTimeout(function() {
+    setTimeout(() => {
         MM.saveState.classList.remove('opacity-one');
     }, 3000);
 };
@@ -389,7 +395,7 @@ MM.clearGameStats = () => {
                               </div>`;
     MM.saveState.classList.add('opacity-one');
 
-    setTimeout(function() {
+    setTimeout(() => {
         MM.saveState.classList.remove('opacity-one');
     }, 3000);
 };
@@ -416,7 +422,7 @@ MM.loadGameData = () => {
                                   </div>`;
         MM.saveState.classList.add('opacity-one');
 
-        setTimeout(function() {
+        setTimeout(() => {
             MM.saveState.classList.remove('opacity-one');
         }, 3000);
     }
