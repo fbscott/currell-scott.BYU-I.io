@@ -1,7 +1,7 @@
 // global namespace: Memory Match (MM)
 var MM = MM || {};
 
-MM.query; // theme
+MM.theme; // query
 MM.highScore = 0;
 
 // DOM elements
@@ -18,13 +18,13 @@ MM.userInput      = document.memMatch;
 MM.loadGame.addEventListener('click',   () => { MM.loadGameData();   });
 MM.saveGame.addEventListener('click',   () => { MM.setGameStats();   });
 MM.clearGame.addEventListener('click',  () => { MM.clearGameStats(); });
-MM.userInput.addEventListener('submit', e  => { MM.setAndAnimage(e); });
+MM.userInput.addEventListener('submit', e  => { MM.setAndAnimate(e); });
 
 /******************************************************************************
  * SET THEME AND ANIMATE SLIDES
  * @param {Event} e - event
  *****************************************************************************/
-MM.setAndAnimage = e => {
+MM.setAndAnimate = e => {
 
     // keep page from refreshing
     e.preventDefault();
@@ -59,14 +59,7 @@ MM.setAndAnimage = e => {
  * @param  {Array} arr - existing numbers
  * @return {Bool}
  *****************************************************************************/
-MM.isValidNumber = (num, arr = []) => {
-
-    if (!arr.includes(num)) {
-        return true;
-    } else {
-        return false;
-    }
-};
+MM.isValidNumber = (num, arr = []) => !arr.includes(num) ? true : false;
 
 /******************************************************************************
  * RANDOM NUMBER GENERATOR
@@ -292,21 +285,16 @@ MM.updateTheDOM = data => {
  * few words and updates the global namespace. Theme is collected on form
  * submit.
  *****************************************************************************/
-MM.setTheme = () => {
-
-    if (!!MM.userInput.theme.value) {
-        MM.query = MM.userInput.theme.value;
-    } else {
-        MM.query = 'bbq';
-    }
-};
+MM.setTheme = () => !!MM.userInput.theme.value ?
+    MM.theme = MM.userInput.theme.value :
+        MM.theme = 'bbq';
 
 /******************************************************************************
  * GET THEME
  * Returns the user-defined theme for the game.
- * @return {String} MM.query - user-defined theme
+ * @return {String} MM.theme - user-defined theme
  *****************************************************************************/
-MM.getTheme = () => MM.query;
+MM.getTheme = () => MM.theme;
 
 /******************************************************************************
  * LOAD DOCUMENT
@@ -319,7 +307,11 @@ MM.getTheme = () => MM.query;
 MM.ajax = (url, loadCallback) => {
 
     // placeholder while loading
-    MM.panelContainer.innerHTML = `<div class="row"><div class="column"><div class="spinner"></div></div></div>`;
+    MM.panelContainer.innerHTML = `<div class="row">
+                                     <div class="column">
+                                       <div class="spinner"></div>
+                                     </div>
+                                   </div>`;
 
     let _xhr = new XMLHttpRequest();
 
@@ -346,7 +338,7 @@ MM.configureAPI = () => {
 
     MM.baseURL = 'https://pixabay.com/api/';
     MM.key     = '15462183-52054d7c5a68977efe09803b8';
-    MM.query   = MM.getTheme();
+    MM.theme   = MM.getTheme();
 };
 
 /******************************************************************************
@@ -445,6 +437,6 @@ MM.init = () => {
 
     MM.ajax(MM.baseURL + '?key=' +
             MM.key + '&q=' +
-            MM.query + '&image_type=photo',
+            MM.theme + '&image_type=photo',
             MM.updateTheDOM);
 };
