@@ -14,6 +14,17 @@ MM.clearGame      = document.getElementById('js-clear-game');
 MM.saveState      = document.getElementById('js-save-state');
 MM.userInput      = document.memMatch;
 
+// reusable templates
+MM.templates = {
+    status(message) {
+        return `<div class="column">
+                  <div class="save-container text-left">
+                    <p class="margin-bottom-0">${message}</p>
+                  </div>
+                </div>`
+    }
+};
+
 // Event listeners
 MM.loadGame.addEventListener('click',   () => { MM.loadGameData();   });
 MM.saveGame.addEventListener('click',   () => { MM.setGameStats();   });
@@ -32,21 +43,24 @@ MM.setAndAnimate = e => {
     // set the theme as provided by the user
     MM.setTheme();
 
+    // panel groups (three groups of four)
     let _slide1 = document.getElementsByClassName('slide-in-1')[0];
     let _slide2 = document.getElementsByClassName('slide-in-2')[0];
     let _slide3 = document.getElementsByClassName('slide-in-3')[0];
 
-    // initialize the game
+    // panels already in view
     if (_slide1 && _slide2 && _slide3) {
 
+        // animate panel groups (out)
         _slide1.classList.add('slide-out-1');
         _slide2.classList.add('slide-out-2');
         _slide3.classList.add('slide-out-3');
         
+        // wait until panels have animated out before initializing a new game
         setTimeout(() => {
             MM.init();
         }, 750);
-    // re-initialize the game after a new theme is selected
+    // initialize w/o delay if no panels are in view
     } else {
         MM.init();
     }
@@ -72,7 +86,7 @@ MM.isValidNumber = (num, arr = []) => !arr.includes(num) ? true : false;
  *****************************************************************************/
 MM.getRandomNumber = (max, min = 0, arr = []) => {
 
-    // random number between and including range
+    // random number between and including min/max range
     const RAND = Math.floor(Math.random() * max);
 
     // make sure random number doesn't already exist in the array
@@ -110,37 +124,37 @@ MM.getImageIndices = () => {
 
 /******************************************************************************
  * ARRAY SHUFFLER
- * Takes an array as a parameter and shuffles its contents. Returns the
- * original array in a different order.
+ * Takes an array as a parameter and returns a new shuffled array.
  * Source: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array#answer-2450976
  * @param  {Array} array - array to be shuffled
  * @return {Array} shuffled array
  *****************************************************************************/
 MM.shuffleArray = array => {
 
-  let _currentIndex = array.length;
-  let _temporaryValue;
-  let _randomIndex;
+    let _array = [...array]; // clone
+    let _currentIndex = _array.length;
+    let _temporaryValue;
+    let _randomIndex;
 
-  // While there remain elements to shuffle...
-  while (0 !== _currentIndex) {
+    // While there remain elements to shuffle...
+    while (0 !== _currentIndex) {
 
-    // Pick a remaining element...
-    _randomIndex = Math.floor(Math.random() * _currentIndex);
-    _currentIndex -= 1;
+        // Pick a remaining element...
+        _randomIndex = Math.floor(Math.random() * _currentIndex);
+        _currentIndex -= 1;
 
-    // And swap it with the current element.
-    _temporaryValue = array[_currentIndex];
-    array[_currentIndex] = array[_randomIndex];
-    array[_randomIndex] = _temporaryValue;
-  }
+        // And swap it with the current element.
+        _temporaryValue = _array[_currentIndex];
+        _array[_currentIndex] = _array[_randomIndex];
+        _array[_randomIndex] = _temporaryValue;
+    }
 
-  return array;
+    return _array;
 };
 
 /******************************************************************************
  * IS A MATCH
- * Checks to see if two data attributes are the same
+ * Checks to see if two data attributes are the same.
  * @param {Array} arr - array of DOM elements
  * @return {Bool} _isMatch
  *****************************************************************************/
@@ -176,6 +190,41 @@ MM.advanceScore = () => {
 };
 
 /******************************************************************************
+ * REMOVE CLICK HANDLER
+ * Remove the click handler from disabled panels. Keeps them from flipping back
+ * over.
+ *****************************************************************************/
+MM.removeClickHandler = () => {
+
+    const DISABLED_PANELS = document.getElementsByClassName('js-disabled');
+
+    [].forEach.call(DISABLED_PANELS, disabledPanel => {
+        disabledPanel.classList.remove('flip');
+        disabledPanel.removeEventListener('click', MM.flipPanels);
+    });
+};
+
+/******************************************************************************
+ * DISABLE PANELS
+ * Compare flipped panels. Disable them if they're a match.
+ * @param  {Array} arr - panels to compare and disable
+ *****************************************************************************/
+MM.disablePanels = arr => {
+
+    // disable panels if they're a match
+    if (MM.isMatch(arr)) {
+        [].forEach.call(arr, flippedPanel => {
+            // prevent them from flipping back over once matched
+            flippedPanel.classList.add('disabled', 'js-disabled');
+            MM.maxFlipCount += 1;
+        });
+    }
+
+    // prevent panels from flipping once matched
+    MM.removeClickHandler();
+};
+
+/******************************************************************************
  * PANEL FLIPPER
  * Flips the panels over when clicked
  *****************************************************************************/
@@ -190,23 +239,8 @@ MM.flipPanels = el => {
 
         MM.flippedPanels = document.getElementsByClassName('js-panel-flip flip');
 
-        // check flipped panels to make sure they're a match
-        if (MM.isMatch(MM.flippedPanels)) {
-            [].forEach.call(MM.flippedPanels, flippedPanel => {
-                // prevent them from flipping back over once matched
-                flippedPanel.classList.add('disabled', 'js-disabled');
-                MM.maxFlipCount += 1;
-            });
-        }
-
-        const DISABLED_PANELS = document.getElementsByClassName('js-disabled');
-
-        [].forEach.call(DISABLED_PANELS, disabledPanel => {
-            disabledPanel.classList.remove('flip');
-            // remove click handler
-            // allows other panels to be flipped after match
-            disabledPanel.removeEventListener('click', MM.flipPanels);
-        });
+        // compare and disable flipped panels
+        MM.disablePanels(MM.flippedPanels);
 
         MM.flippedCount++;
         
@@ -222,10 +256,10 @@ MM.flipPanels = el => {
 };
 
 /******************************************************************************
- * ON PANEL CLICK
- * Listens for panel click event
+ * ADD CLICK HANDLER
+ * Add click handler to each panel. Allows them to be flipped.
  *****************************************************************************/
-MM.onPanelClick = () => {
+MM.addClickHandler = () => {
 
     // all panels
     MM.panels = document.getElementsByClassName('js-panel-flip');
@@ -249,24 +283,24 @@ MM.updateTheDOM = data => {
 
     // add 12 panels to the container
     for (let i = 0; i < IMG_ARRAY.length; i++) {
-        // break panels up into rows of four
+        // group panels by three rows of four
         if (i != 0 && i % 4 === 0) {
             _panels += `</div><div class="row slide-in-${(i % 3) + 1}" style="left: 2000px;">`;
         }
 
         // individual panel markup
         _panels += `<div class="column small-3">
-                     <div class="panel-container">
-                       <div class="panel-flip js-panel-flip" data-id="${data.hits[IMG_ARRAY[i]].id}">
-                         <div class="panel-front">
-                           <img src="./assets/img/question_mark.png" width="113" height="113" />
-                         </div>
-                         <div class="panel-back"
-                              style="background-image: url(${data.hits[IMG_ARRAY[i]].webformatURL})">
-                         </div>
-                       </div>
-                     </div>
-                   </div>`;
+                      <div class="panel-container">
+                        <div class="panel-flip js-panel-flip" data-id="${data.hits[IMG_ARRAY[i]].id}">
+                          <div class="panel-front">
+                            <img src="./assets/img/question_mark.png" width="113" height="113" />
+                          </div>
+                          <div class="panel-back"
+                               style="background-image: url(${data.hits[IMG_ARRAY[i]].webformatURL})">
+                          </div>
+                        </div>
+                      </div>
+                    </div>`;
     }
 
     // close container
@@ -276,7 +310,7 @@ MM.updateTheDOM = data => {
     MM.panelContainer.innerHTML = _panels;
 
     // add flip logic
-    MM.onPanelClick();
+    MM.addClickHandler();
 };
 
 /******************************************************************************
@@ -354,11 +388,9 @@ MM.setGameStats = () => {
 
     localStorage.setItem('gameData', JSON.stringify(_gameStats));
 
-    MM.saveState.innerHTML = `<div class="column">
-                                <div class="save-container text-left">
-                                  <p class="margin-bottom-0">Game Saved!</p>
-                                </div>
-                              </div>`;
+    // display status message
+    MM.saveState.innerHTML = MM.templates.status('Game Saved!');
+
     MM.saveState.classList.add('opacity-one');
 
     setTimeout(() => {
@@ -380,11 +412,9 @@ MM.clearGameStats = () => {
 
     localStorage.removeItem('gameData');
 
-    MM.saveState.innerHTML = `<div class="column">
-                                <div class="save-container text-left">
-                                  <p class="margin-bottom-0">Game Data Deleted.</p>
-                                </div>
-                              </div>`;
+    // display status message
+    MM.saveState.innerHTML = MM.templates.status('Game Data Deleted.');
+
     MM.saveState.classList.add('opacity-one');
 
     setTimeout(() => {
@@ -402,16 +432,14 @@ MM.loadGameData = () => {
 
     MM.highScore = _stats.highScore;
 
-    if (_stats) {
+    if (!!_stats) {
         MM.userInput.theme.value   = _stats.theme;
         MM.highScoreCard.innerHTML = MM.highScore
-        MM.userInput.submit.click();
+        MM.userInput.submit.click(); // trigger initialization
 
-        MM.saveState.innerHTML = `<div class="column">
-                                    <div class="save-container text-left">
-                                      <p class="margin-bottom-0">Game Data Loaded.</p>
-                                    </div>
-                                  </div>`;
+        // display status message
+        MM.saveState.innerHTML = MM.templates.status('Game Data Loaded.');
+
         MM.saveState.classList.add('opacity-one');
 
         setTimeout(() => {
@@ -427,9 +455,11 @@ MM.loadGameData = () => {
 MM.init = () => {
 
     // default values
-    MM.maxFlipCount = 2;
+    MM.maxFlipCount = 2; // max number of flippable panels
     MM.score        = 0;
     MM.flippedCount = 0; // number of flipped panels
+                         // there could be more than two depending on how many
+                         // matches exist
 
     MM.scoreCard.innerHTML = MM.score;
 
