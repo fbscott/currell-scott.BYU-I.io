@@ -22,7 +22,12 @@ MM.templates = {
                     <p class="margin-bottom-0">${message}</p>
                   </div>
                 </div>`
-    }
+    },
+    spinner: `<div class="row">
+                <div class="column">
+                  <div class="spinner"></div>
+                </div>
+              </div>`
 };
 
 // Event listeners
@@ -293,7 +298,9 @@ MM.updateTheDOM = data => {
                       <div class="panel-container">
                         <div class="panel-flip js-panel-flip" data-id="${data.hits[IMG_ARRAY[i]].id}">
                           <div class="panel-front">
-                            <img src="./assets/img/question_mark.png" width="113" height="113" />
+                            <img src="./assets/img/question_mark.png"
+                                 width="113"
+                                 height="113" />
                           </div>
                           <div class="panel-back"
                                style="background-image: url(${data.hits[IMG_ARRAY[i]].webformatURL})">
@@ -341,11 +348,7 @@ MM.getTheme = () => MM.theme;
 MM.ajax = (url, loadCallback) => {
 
     // placeholder while loading
-    MM.panelContainer.innerHTML = `<div class="row">
-                                     <div class="column">
-                                       <div class="spinner"></div>
-                                     </div>
-                                   </div>`;
+    MM.panelContainer.innerHTML = MM.templates.spinner;
 
     let _xhr = new XMLHttpRequest();
 
