@@ -16,10 +16,19 @@ MM.userInput      = document.memMatch;
 
 // reusable templates
 MM.templates = {
-    status(message) {
-        return `<div class="column">
-                  <div class="save-container text-left">
-                    <p class="margin-bottom-0">${message}</p>
+    panel(data_id, img_url) {
+        return `<div class="column small-3">
+                  <div class="panel-container">
+                    <div class="panel-flip js-panel-flip" data-id="${data_id}">
+                      <div class="panel-front">
+                        <img src="./assets/img/question_mark.png"
+                             width="113"
+                             height="113" />
+                      </div>
+                      <div class="panel-back"
+                           style="background-image: url(${img_url})">
+                      </div>
+                    </div>
                   </div>
                 </div>`
     },
@@ -27,7 +36,14 @@ MM.templates = {
                 <div class="column">
                   <div class="spinner"></div>
                 </div>
-              </div>`
+              </div>`,
+    status(message) {
+        return `<div class="column">
+                  <div class="save-container text-left">
+                    <p class="margin-bottom-0">${message}</p>
+                  </div>
+                </div>`
+    }
 };
 
 // Event listeners
@@ -293,21 +309,8 @@ MM.updateTheDOM = data => {
             _panels += `</div><div class="row slide-in-${(i % 3) + 1}" style="left: 2000px;">`;
         }
 
-        // individual panel markup
-        _panels += `<div class="column small-3">
-                      <div class="panel-container">
-                        <div class="panel-flip js-panel-flip" data-id="${data.hits[IMG_ARRAY[i]].id}">
-                          <div class="panel-front">
-                            <img src="./assets/img/question_mark.png"
-                                 width="113"
-                                 height="113" />
-                          </div>
-                          <div class="panel-back"
-                               style="background-image: url(${data.hits[IMG_ARRAY[i]].webformatURL})">
-                          </div>
-                        </div>
-                      </div>
-                    </div>`;
+        // add individual panel markup
+        _panels += MM.templates.panel(data.hits[IMG_ARRAY[i]].id, data.hits[IMG_ARRAY[i]].webformatURL);
     }
 
     // close container
